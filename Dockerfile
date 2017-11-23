@@ -11,6 +11,7 @@ RUN apt-get update && \
           python3-wheel \
           python3-numpy \
           python3-setuptools \
+          pkg-config \
           libfreetype6-dev \
           libpng12-dev \
           wget && \
@@ -63,7 +64,29 @@ RUN python3 -m ipykernel.kernelspec && \
 
 COPY jupyter_notebook_config.py /root/.jupyter/
 
+# Install additional ML/DL/Science libraries
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+          pkg-config \
+          python3-scipy && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN cd /tmp && \
+    pip3 install --no-cache-dir \
+          matplotlib \
+          pandas \
+          sympy \
+          nose \
+          scikit-learn \
+          parameterized \
+          sphinx \
+          pydot-ng \
+          theano \
+          statsmodels
+
+
 # Initialise
+ENV TB_LOG_DIR "/root/pod_storage/tf_logs"
 COPY start.sh /
 RUN chmod +x /start.sh
 
