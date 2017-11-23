@@ -9,7 +9,7 @@ RUN apt-get update && \
           python3-pip \
           python3-wheel \
           python3-numpy \
-          python3-scipy
+          python3-scipy \
           python3-setuptools \
           pkg-config \
           libfreetype6-dev \
@@ -50,14 +50,14 @@ RUN cd /tmp && \
           pydot-ng \
           scikit-learn \
           sphinx \
-          statsmodels && \
+          statsmodels \
           sympy \
           theano \
           /tmp/tensorflow_tensorboard-0.4.0rc3-py3-none-any.whl \
           /tmp/tensorflow-1.4.0-cp35-cp35m-linux_ppc64le.whl \
           virtualenv \
           webencodings \
-          widgetsnbextension \
+          widgetsnbextension && \
     pip3 install --no-cache-dir \
          --upgrade bleach && \
     rm -f /tmp/*
