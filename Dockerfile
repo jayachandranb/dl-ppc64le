@@ -11,7 +11,6 @@ RUN apt-get update && \
           python3-wheel \
           python3-numpy \
           python3-setuptools \
-          pkg-config \
           libfreetype6-dev \
           libpng12-dev \
           wget && \
