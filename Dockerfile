@@ -2,7 +2,6 @@ FROM nvidia/cuda-ppc64le:8.0-cudnn6-devel-ubuntu16.04
 LABEL maintainer="Jayachandran B (ANZ Engineering)"
 
 # Install Python 3.5 (and somemore) and make it the default
-
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
           python3 \
@@ -10,7 +9,9 @@ RUN apt-get update && \
           python3-pip \
           python3-wheel \
           python3-numpy \
+          python3-scipy
           python3-setuptools \
+          pkg-config \
           libfreetype6-dev \
           libpng12-dev \
           wget && \
@@ -24,8 +25,7 @@ RUN apt-get update && \
     ln -s /usr/bin/pygettext3.5 /usr/bin/pygettext && \
     ln -s /usr/bin/python3.5-config /usr/bin/python-config
 
-# Install jupyter and tensorflow
-
+# Install ML/DL/Stat libraries and jupyter
 RUN cd /tmp && \
     wget https://raw.githubusercontent.com/jayachandranb/tensorflow-py35-ppc64le/master/tensorflow-1.4.0-cp35-cp35m-linux_ppc64le.whl && \
     wget https://raw.githubusercontent.com/jayachandranb/tensorflow-py35-ppc64le/master/tensorflow_tensorboard-0.4.0rc3-py3-none-any.whl && \
@@ -40,14 +40,24 @@ RUN cd /tmp && \
           jupyter-client \
           jupyter-console \
           jupyter-core \
+          matplotlib \
           nbconvert \
           nbformat \
+          nose \
           notebook \
-          /tmp/tensorflow-1.4.0-cp35-cp35m-linux_ppc64le.whl \
+          pandas \
+          parameterized \
+          pydot-ng \
+          scikit-learn \
+          sphinx \
+          statsmodels && \
+          sympy \
+          theano \
           /tmp/tensorflow_tensorboard-0.4.0rc3-py3-none-any.whl \
+          /tmp/tensorflow-1.4.0-cp35-cp35m-linux_ppc64le.whl \
           virtualenv \
           webencodings \
-          widgetsnbextension && \
+          widgetsnbextension \
     pip3 install --no-cache-dir \
          --upgrade bleach && \
     rm -f /tmp/*
@@ -62,27 +72,6 @@ RUN python3 -m ipykernel.kernelspec && \
     mkdir -p /root/local_storage
 
 COPY jupyter_notebook_config.py /root/.jupyter/
-
-# Install additional ML/DL/Science libraries
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-          pkg-config \
-          python3-scipy && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN cd /tmp && \
-    pip3 install --no-cache-dir \
-          matplotlib \
-          pandas \
-          sympy \
-          nose \
-          scikit-learn \
-          parameterized \
-          sphinx \
-          pydot-ng \
-          theano \
-          statsmodels
-
 
 # Initialise
 ENV TB_LOG_DIR "/root/pod_storage/tf_logs"
