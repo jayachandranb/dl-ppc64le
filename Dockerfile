@@ -82,7 +82,7 @@ COPY __main__.py /usr/local/lib/python3.5/dist-packages/tensorboard/
 
 # Setup jupyter
 RUN python3 -m ipykernel.kernelspec && \
-    jupyter serverextension enable --py jupyterlab &&
+    jupyter serverextension enable --py jupyterlab && \
     mkdir -p /root/pod_storage/notebooks && \
     mkdir -p /root/pod_storage/tf_logs && \
     mkdir -p /root/local_storage
