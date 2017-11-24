@@ -14,6 +14,8 @@ RUN apt-get update && \
           pkg-config \
           libfreetype6-dev \
           libpng12-dev \
+          libjpeg-dev \
+          libpng-dev\
           wget && \
     rm -rf /var/lib/apt/lists/* && \
     rm -f /usr/bin/python && \
@@ -32,6 +34,11 @@ RUN cd /tmp && \
     pip3 install --no-cache-dir \
           --upgrade pip && \
     pip3 install --no-cache-dir \
+          bokeh \
+          cloudpickle \
+          cython \
+          dill \
+          h2o \
           ipykernel \
           ipython \
           ipython-genutils \
@@ -40,15 +47,21 @@ RUN cd /tmp && \
           jupyter-client \
           jupyter-console \
           jupyter-core \
+          jupyterlab \
+          jupyterlab_launcher \
           matplotlib \
           nbconvert \
           nbformat \
           nose \
           notebook \
+          panda \
           pandas \
           parameterized \
+          plotly \
           pydot-ng \
+          scikit-image \
           scikit-learn \
+          seaborn \
           sphinx \
           statsmodels \
           sympy \
@@ -56,8 +69,10 @@ RUN cd /tmp && \
           /tmp/tensorflow_tensorboard-0.4.0rc3-py3-none-any.whl \
           /tmp/tensorflow-1.4.0-cp35-cp35m-linux_ppc64le.whl \
           virtualenv \
+          vincent \
           webencodings \
-          widgetsnbextension && \
+          widgetsnbextension \
+          xlrd && \
     pip3 install --no-cache-dir \
          --upgrade bleach && \
     rm -f /tmp/*
@@ -67,6 +82,7 @@ COPY __main__.py /usr/local/lib/python3.5/dist-packages/tensorboard/
 
 # Setup jupyter
 RUN python3 -m ipykernel.kernelspec && \
+    jupyter serverextension enable --py jupyterlab &&
     mkdir -p /root/pod_storage/notebooks && \
     mkdir -p /root/pod_storage/tf_logs && \
     mkdir -p /root/local_storage
@@ -75,6 +91,7 @@ COPY jupyter_notebook_config.py /root/.jupyter/
 
 # Initialise
 ENV TB_LOG_DIR "/root/pod_storage/tf_logs"
+ENV UI_MODE "lab"
 COPY start.sh /
 RUN chmod +x /start.sh
 
