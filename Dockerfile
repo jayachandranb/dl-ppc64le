@@ -59,6 +59,7 @@ RUN cd /tmp && \
           parameterized \
           plotly \
           pydot-ng \
+          pyspark \
           scikit-image \
           scikit-learn \
           seaborn \
