@@ -98,5 +98,5 @@ RUN chmod +x /start.sh
 
 WORKDIR /root/pod_storage/notebooks
 
-EXPOSE 7777 8888
+EXPOSE 7770 7771 7772 7773 7774 7775 7776 7777 7778 7779 8888
 CMD ["/start.sh"]
